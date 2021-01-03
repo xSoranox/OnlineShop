@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Products p WHERE p.EndPrice=:endPrice")
     List<Product> getProductsByEndPrice(@Param("endPrice") BigDecimal endPrice);
 
-    @Query("SELECT p FROM Products p WHERE p.Discount=:discount")
+    @Query("SELECT p FROM Products p WHERE p.Discount=:discount ")
     List<Product> getProductsByDiscount(@Param("discount") BigDecimal discount);
 
 }
