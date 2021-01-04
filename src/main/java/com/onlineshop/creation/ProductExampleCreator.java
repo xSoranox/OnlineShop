@@ -8,6 +8,7 @@ import com.onlineshop.enumeration.subcategory.DairyAndEggs;
 import com.onlineshop.enumeration.subcategory.Drinks;
 import com.onlineshop.enumeration.subcategory.MeatAndFish;
 import com.onlineshop.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onlineshop.calculations.EndPriceCalculator;
@@ -21,8 +22,10 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class ProductExampleCreator {
 
-    private final ProductRepository repository;
-    private final EndPriceCalculator endPriceCalculator;
+    @Autowired
+    private ProductRepository repository;
+    @Autowired
+    private EndPriceCalculator endPriceCalculator;
 
     public Set<Product> getExampleOfProducts() {
         Set<Product> products = new HashSet<>();

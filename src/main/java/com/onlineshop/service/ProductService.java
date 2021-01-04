@@ -2,6 +2,7 @@ package com.onlineshop.service;
 
 import com.onlineshop.creation.ProductExampleCreator;
 import com.onlineshop.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onlineshop.domain.Product;
@@ -15,8 +16,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository repository;
-    private final ProductExampleCreator productCreator;
+    @Autowired
+    private ProductRepository repository;
+    @Autowired
+    private ProductExampleCreator productCreator;
 
     public List<Product> findAllProducts() {
         return repository.findAll();

@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"com.onlineshop.repository"})
-@PropertySource("classpath:resources/application.properties")
+@PropertySource("classpath:application.properties")
 public class JpaConfig {
 
     @Resource

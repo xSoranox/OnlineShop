@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import com.onlineshop.domain.Product;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EndPriceCalculator {
 
     public BigDecimal calculateEndPrice(Product product) {

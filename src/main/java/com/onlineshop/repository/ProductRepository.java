@@ -12,22 +12,23 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT IF(p.Name=:name, 'true', 'false') FROM Products p")
+    /*
+    @Query(value = "SELECT IF(p.Name=:name, 'true', 'false') FROM Products p")
     String existsByName(@Param("name") String name);
-
-    @Query("SELECT p FROM Products p WHERE p.Name=:name")
+*/
+    @Query(value = "SELECT p FROM Products p WHERE p.Name=:name", nativeQuery = true)
     List<Product> findProductsByName(@Param("name") String name);
 
-    @Query("SELECT p FROM Products p WHERE p.Category=:category")
+    @Query(value = "SELECT p FROM Products p WHERE p.Category=:category", nativeQuery = true)
     List<Product> getProductsByCategory(@Param("category") String category);
 
-    @Query("SELECT p FROM Products p WHERE p.Subcategory=:subcategory")
+    @Query(value = "SELECT p FROM Products p WHERE p.Subcategory=:subcategory", nativeQuery = true)
     List<Product> getProductsBySubcategory(@Param("subcategory") String subcategory);
 
-    @Query("SELECT p FROM Products p WHERE p.EndPrice=:endPrice")
+    @Query(value = "SELECT p FROM Products p WHERE p.EndPrice=:endPrice", nativeQuery = true)
     List<Product> getProductsByEndPrice(@Param("endPrice") BigDecimal endPrice);
 
-    @Query("SELECT p FROM Products p WHERE p.Discount=:discount ")
+    @Query(value = "SELECT p FROM Products p WHERE p.Discount=:discount", nativeQuery = true)
     List<Product> getProductsByDiscount(@Param("discount") BigDecimal discount);
 
 }
