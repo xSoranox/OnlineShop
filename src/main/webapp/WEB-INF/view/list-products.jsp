@@ -17,21 +17,21 @@
 				<th>Initial price</th>
 				<th>Discount</th>
 				<th>End price</th>
-				<th></th>
+				<th>Add product</th>
 			</tr>
 			<c:forEach var="product" items="${products}" varStatus="index">
 				<tr>
 					<td>${index.count}</td>
 					<td>${product.name}</td>
 					<td>${product.priceBeforeDiscount}</td>
-					<td>${product.discount}</td>
+					<td>${product.discount}%</td>
 					<td>${product.endPrice}</td>
-					<td></td>
+					<td>+</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	<br></br>
-	<button type="button"><a href="example">Add Sample Products</a></button>
+	<button type="button"><a href="products/example">Add Sample Products</a></button>
 </body>
 </html>

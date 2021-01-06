@@ -8,7 +8,6 @@ public class Home {
 
     @RequestMapping("/")
     public String showMenu() {
-        System.out.println("HAIL HITLER!!!");
-        return "list-products";
+        return "redirect:/products";
     }
 }

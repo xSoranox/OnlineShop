@@ -28,7 +28,7 @@ public class Product {
     private String name;
 
     @Column(name = "Category")
-    private String category;
+    private String category; 
 
     @Column(name = "Subcategory")
     private String subcategory;
@@ -41,6 +41,10 @@ public class Product {
 
     @Column(name = "EndPrice")
     private BigDecimal endPrice;
+    
+    public Product() {
+    	
+    }
 
     public Product(ProductBuilder builder) {
         this.name = builder.getName();
@@ -68,5 +72,5 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, priceBeforeDiscount, category, discount, endPrice);
-    }
+    } 
 }

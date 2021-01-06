@@ -1,8 +1,8 @@
 package com.onlineshop.creation;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.onlineshop.enumeration.subcategory.DairyAndEggs;
 import com.onlineshop.enumeration.subcategory.Drinks;
@@ -27,35 +27,25 @@ public class ProductExampleCreator {
     @Autowired
     private EndPriceCalculator endPriceCalculator;
 
-    public Set<Product> getExampleOfProducts() {
-        Set<Product> products = new HashSet<>();
+    public void createExampleOfProducts() {
 
-        Product product1 = createProduct("Pepsi", Category.DRINKS.getValue(),
+        createProduct("Pepsi", Category.DRINKS.getValue(),
                 Drinks.SOFT_DRINKS.getValue(), BigDecimal.valueOf(1.27), BigDecimal.valueOf(22));
-        Product product2 = createProduct("Milka", Category.SWEETS_AND_SNACKS.getValue(),
+        createProduct("Milka", Category.SWEETS_AND_SNACKS.getValue(),
                 SweetsAndSnacks.BISCUITS.getValue(), BigDecimal.valueOf(1.30), BigDecimal.ZERO);
-        Product product3 = createProduct("Schogetten", Category.SWEETS_AND_SNACKS.getValue(),
+        createProduct("Schogetten", Category.SWEETS_AND_SNACKS.getValue(),
                 SweetsAndSnacks.CHOCOLATE.getValue(), BigDecimal.valueOf(1.25), BigDecimal.ZERO);
-        Product product4 = createProduct("Salmon fillet", Category.MEAT_AND_FISH.getValue(),
+        createProduct("Salmon fillet", Category.MEAT_AND_FISH.getValue(),
                 MeatAndFish.FRESH_FISH.getValue(), BigDecimal.valueOf(6.99), BigDecimal.ZERO);
-        Product product5 = createProduct("Сheddar cheese", Category.DAIRY_AND_EGGS.getValue(),
+        createProduct("Cheddar cheese", Category.DAIRY_AND_EGGS.getValue(),
                 DairyAndEggs.CHEESE.getValue(), BigDecimal.valueOf(7.49), BigDecimal.ZERO);
-
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
-        products.add(product4);
-        products.add(product5);
-        return products;
-
     }
 
-    private Product createProduct(String name, String category, String subcategory, BigDecimal priceBeforeDiscount,
+    private void createProduct(String name, String category, String subcategory, BigDecimal priceBeforeDiscount,
                                   BigDecimal discount) {
         Product product =  new ProductBuilder(name, category, subcategory, priceBeforeDiscount)
                 .setDiscount(discount).build();
         product.setEndPrice(endPriceCalculator.calculateEndPrice(product));
-        Product savedProduct = repository.save(product);
-        return savedProduct;
+        repository.save(product);
     }
 }

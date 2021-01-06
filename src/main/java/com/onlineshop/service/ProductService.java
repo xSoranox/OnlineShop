@@ -16,21 +16,21 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductRepository repository;
-    @Autowired
-    private ProductExampleCreator productCreator;
+	@Autowired
+	private ProductRepository repository;
+	@Autowired
+	private ProductExampleCreator productCreator;
 
-    public List<Product> findAllProducts() {
-        return repository.findAll();
-    }
+	public List<Product> findAllProducts() {
+		return repository.findAll();
+	}
 
-    public Set<Product> getExampleOfProducts() {
-        return productCreator.getExampleOfProducts();
-    }
+	public void createExampleOfProducts() {
+		productCreator.createExampleOfProducts();
+	}
 
-    public List<Product> findProductsByName(String productName) {
-        return repository.findProductsByName(productName);
-    }
+	public List<Product> findProductsByName(String productName) {
+		return repository.findProductsByName(productName);
+	}
 
 }

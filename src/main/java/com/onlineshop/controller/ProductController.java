@@ -14,7 +14,6 @@ import com.onlineshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -23,19 +22,19 @@ public class ProductController {
 
     @RequestMapping("/products")
     public ModelAndView getAllProducts() {
-        System.out.println("HAIL HITLER!!!");
         List<Product> products = productService.findAllProducts();
         ModelAndView modelAndView = new ModelAndView("list-products");
         modelAndView.addObject("products", products);
         return modelAndView;
     }
 
-    @RequestMapping("/example")
-    public List<Product> getExampleOfProducts() {
-        return productService.findAllProducts();
+    @RequestMapping("/products/example")
+    public String getExampleOfProducts() {
+        productService.createExampleOfProducts();
+        return "redirect:/products";
     }
 
-    @RequestMapping("/{productName}")
+    @RequestMapping("/products/{productName}")
     public List<Product> findProductsByName(@PathVariable String productName) {
         return productService.findProductsByName(productName);
     }
