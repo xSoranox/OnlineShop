@@ -10,7 +10,6 @@ import com.onlineshop.domain.Product;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +19,8 @@ public class ProductService {
 	private ProductRepository repository;
 	@Autowired
 	private ProductExampleCreator productCreator;
+	@Autowired
+	private ProductTypeService productTypeService;
 
 	public List<Product> findAllProducts() {
 		return repository.findAll();
@@ -31,6 +32,11 @@ public class ProductService {
 
 	public List<Product> findProductsByName(String productName) {
 		return repository.findProductsByName(productName);
+	}
+	
+	public List<Product> findProductsByType(String productType) {
+		String category = productTypeService.getCategoryByType(productType);
+		return repository.getProductsByCategory(category);
 	}
 
 }

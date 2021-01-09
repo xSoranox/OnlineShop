@@ -38,5 +38,13 @@ public class ProductController {
     public List<Product> findProductsByName(@PathVariable String productName) {
         return productService.findProductsByName(productName);
     }
+    
+    @RequestMapping("/products/findbytype/{productType}")
+    public ModelAndView getProductsByType(@PathVariable("productType") String productType) {
+        List<Product> products = productService.findProductsByType(productType);
+        ModelAndView modelAndView = new ModelAndView("list-products");
+        modelAndView.addObject("products", products);
+        return modelAndView;
+    }
 
 }

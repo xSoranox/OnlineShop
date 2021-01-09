@@ -9,6 +9,14 @@
 </head>
 <body>
 	<div align = "center">
+	<button type="button"><a href="<c:url value="/products" />">Home</a></button>
+	<a href="<c:url value="/products/findbytype/fruitAndVegetables"/>" >Fruits and vegetables</a>
+	<a href="<c:url value="/products/findbytype/breadAndPastries"/>" >Bread and pastries</a>
+	<a href="<c:url value="/products/findbytype/dairyAndEggs"/>" >Dairy and eggs</a>
+	<a href="<c:url value="/products/findbytype/meatAndFish"/>" >Meat and fish</a>
+	<a href="<c:url value="/products/findbytype/sweetsAndSnacks"/>" >Sweets and snacks</a>
+	<a href="<c:url value="/products/findbytype/drinks"/>" >Drinks</a> 
+	
 	    <h2>Product storage</h2>
 		<table border="1" cellpadding="5">
 			<tr>
@@ -23,15 +31,15 @@
 				<tr>
 					<td>${index.count}</td>
 					<td>${product.name}</td>
-					<td>${product.priceBeforeDiscount}</td>
+					<td>€${product.priceBeforeDiscount}</td>
 					<td>${product.discount}%</td>
-					<td>${product.endPrice}</td>
+					<td>€${product.endPrice}</td>
 					<td>+</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	<br></br>
-	<button type="button"><a href="products/example">Add Sample Products</a></button>
+	<button type="button"><a href="<c:url value="/products/example"/>" >Add Sample Products</a></button>
 </body>
 </html>
