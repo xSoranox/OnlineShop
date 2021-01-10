@@ -38,5 +38,9 @@ public class ProductService {
 		String category = productTypeService.getCategoryByType(productType);
 		return repository.getProductsByCategory(category);
 	}
+	
+	public void deleteAllProducts() {
+		repository.deleteAll();
+	}
 
 }

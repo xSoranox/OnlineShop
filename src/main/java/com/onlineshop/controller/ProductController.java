@@ -46,5 +46,11 @@ public class ProductController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
+    
+    @RequestMapping("/products/flush")
+    public String flush() {
+        productService.deleteAllProducts();
+        return "redirect:/";
+    }
 
 }

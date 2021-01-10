@@ -40,6 +40,7 @@
 		</table>
 	</div>
 	<br></br>
-	<button type="button"><a href="<c:url value="/products/example"/>" >Add Sample Products</a></button>
+	<button type="button"><a href="<c:url value="/products/example"/>" >Add sample products</a></button>
+	<button type="button"><a href="<c:url value="/products/flush"/>" >Remove all products</a></button>
 </body>
 </html>
