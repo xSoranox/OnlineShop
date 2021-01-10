@@ -1,9 +1,7 @@
 package com.onlineshop.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.onlineshop.domain.CartProduct;
 import com.onlineshop.domain.Product;
 import com.onlineshop.domain.ShoppingCart;
-import com.onlineshop.enumeration.Category;
-import com.onlineshop.enumeration.subcategory.BreadAndPastries;
 import com.onlineshop.repository.CartProductRepository;
 import com.onlineshop.repository.ShoppingCartRepository;
 
