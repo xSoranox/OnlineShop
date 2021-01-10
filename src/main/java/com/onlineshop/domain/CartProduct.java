@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.onlineshop.creation.CartProductBuilder;
+
 import lombok.Data;
 
 @Data
@@ -25,7 +27,7 @@ public class CartProduct {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne()
     @JoinColumn(name = "CartID", nullable = false)
     private ShoppingCart shoppingCart;
 
@@ -46,6 +48,20 @@ public class CartProduct {
 
     @Column(name = "EndPrice")
     private BigDecimal endPrice;
+    
+    public CartProduct() {
+    	
+    }
+
+    public CartProduct(CartProductBuilder builder) {
+        this.name = builder.getName();
+        this.category = builder.getCategory();
+        this.subcategory = builder.getSubcategory();
+        this.priceBeforeDiscount = builder.getPriceBeforeDiscount();
+        this.discount = builder.getDiscount();
+        this.endPrice = builder.getEndPrice();
+        this.shoppingCart = builder.getShoppingCart();
+    }
 
     @Override
     public boolean equals(Object o) {

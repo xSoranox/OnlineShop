@@ -10,6 +10,7 @@ import com.onlineshop.domain.Product;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,10 @@ public class ProductService {
 
 	public List<Product> findProductsByName(String productName) {
 		return repository.findProductsByName(productName);
+	}
+	
+	public Optional<Product> findProductById(Long productId) {
+		return repository.findById(productId);
 	}
 	
 	public List<Product> findProductsByType(String productType) {
