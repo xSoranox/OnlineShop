@@ -56,5 +56,9 @@ public class ProductService {
 	public void deleteAllProducts() {
 		repository.deleteAll();
 	}
+	
+	public void deleteProductById(Long id) {
+		repository.deleteProductById(id);
+	}
 
 }

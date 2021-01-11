@@ -49,5 +49,11 @@ public class AdminModeController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
+    
+	@RequestMapping("/adminmode/delete/{productId}")
+	public String deleteProductFromShoppingCart(@PathVariable("productId") Long productId) {
+		productService.deleteProductById(productId);
+		return "redirect:/adminmode";
+	}
 
 }
