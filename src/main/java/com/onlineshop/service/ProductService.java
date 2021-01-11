@@ -9,6 +9,7 @@ import com.onlineshop.domain.Product;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,14 @@ public class ProductService {
 	
 	public Optional<Product> findProductById(Long productId) {
 		return repository.findById(productId);
+	}
+	
+	public List<Product> findProductsById(String productId) {
+		Long id = Long.parseLong(productId);
+		Optional<Product> product = findProductById(id);
+		List<Product> products = new ArrayList<>();
+		product.ifPresent(p -> products.add(p));
+		return products;
 	}
 	
 	public List<Product> findProductsByType(String productType) {
