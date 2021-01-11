@@ -25,9 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT p FROM Product p WHERE p.category=:category")
     List<Product> getProductsByCategory(@Param("category") String category);
 
-    @Query(value = "SELECT p FROM Product p WHERE p.subcategory=:subcategory")
-    List<Product> getProductsBySubcategory(@Param("subcategory") String subcategory);
-
     @Query(value = "SELECT p FROM Product p WHERE p.endPrice=:endPrice")
     List<Product> getProductsByEndPrice(@Param("endPrice") BigDecimal endPrice);
 

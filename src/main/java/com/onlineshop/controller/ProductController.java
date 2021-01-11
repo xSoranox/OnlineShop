@@ -56,5 +56,4 @@ public class ProductController {
         productService.deleteAllProducts();
         return "redirect:/";
     }
-
 }

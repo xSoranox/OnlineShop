@@ -73,7 +73,7 @@
 					<td align="center">€${product.priceBeforeDiscount}</td>
 					<td align="center">${product.discount}%</td>
 					<td align="center">€${product.endPrice}</td>
-					<td align="center"><a href="<c:url value="/adminmode/edit/${product.id}"/>">Edit</a></td>
+					<td align="center"><a href="<c:url value="/adminmode/editProduct/${product.id}"/>">Edit</a></td>
 					<td align="center"><a href="<c:url value="/adminmode/editor/add/${product.id}"/>">Select</a></td>
 					<td align="center"><a href="<c:url value="/adminmode/delete/${product.id}"/>">Delete</a></td>
 				</tr>

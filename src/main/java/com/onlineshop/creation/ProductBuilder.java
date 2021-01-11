@@ -8,14 +8,12 @@ public class ProductBuilder {
 
     private String name;
     private String category;
-    private String subcategory;
     private BigDecimal priceBeforeDiscount;
     private BigDecimal discount;
 
-    public ProductBuilder(String name, String category, String subcategory, BigDecimal priceBeforeDiscount) {
+    public ProductBuilder(String name, String category, BigDecimal priceBeforeDiscount) {
         this.name = name;
         this.category = category;
-        this.subcategory = subcategory;
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
@@ -30,10 +28,6 @@ public class ProductBuilder {
 
     public String getCategory() {
         return category;
-    }
-
-    public String getSubcategory() {
-        return subcategory;
     }
 
     public BigDecimal getPriceBeforeDiscount() {

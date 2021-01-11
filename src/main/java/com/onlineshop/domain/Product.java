@@ -30,9 +30,6 @@ public class Product {
     @Column(name = "Category")
     private String category; 
 
-    @Column(name = "Subcategory")
-    private String subcategory;
-
     @Column(name = "PriceBeforeDiscount")
     private BigDecimal priceBeforeDiscount;
 
@@ -49,7 +46,6 @@ public class Product {
     public Product(ProductBuilder builder) {
         this.name = builder.getName();
         this.category = builder.getCategory();
-        this.subcategory = builder.getSubcategory();
         this.priceBeforeDiscount = builder.getPriceBeforeDiscount();
         this.discount = builder.getDiscount();
     }
@@ -63,7 +59,6 @@ public class Product {
         return Objects.equals(id, product.id) &&
                 Objects.equals(name, product.name) &&
                 category == product.category &&
-                subcategory == product.subcategory &&
                 Objects.equals(priceBeforeDiscount, product.priceBeforeDiscount) &&
                 Objects.equals(discount, product.discount) &&
                 Objects.equals(endPrice, product.endPrice);

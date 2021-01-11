@@ -20,7 +20,7 @@ public class CartProductService {
 	
 	public CartProduct createCartProduct(Product product, ShoppingCart cart) {
 		CartProduct cartProduct = new CartProductBuilder(product.getName(), product.getCategory(), 
-				product.getSubcategory(), product.getPriceBeforeDiscount(), cart)
+				product.getPriceBeforeDiscount(), cart)
 				.setDiscount(product.getDiscount())
 				.setEndPrice(product.getEndPrice())
 				.build();

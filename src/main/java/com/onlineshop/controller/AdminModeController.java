@@ -1,11 +1,15 @@
 package com.onlineshop.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,5 +59,33 @@ public class AdminModeController {
 		productService.deleteProductById(productId);
 		return "redirect:/adminmode";
 	}
+    
+    @RequestMapping("adminmode/editProduct/{id}")
+    public ModelAndView editProduct(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("edit-product");
+        Optional<Product> product = productService.findProductById(id);
+        product.ifPresent(p -> modelAndView.addObject("product", p));
+        return modelAndView;
+    }
+    
+    @RequestMapping("/adminmode/editProduct/saveEditedProduct")
+    public ModelAndView saveEditedBook(@ModelAttribute Product product) {
+    	productService.saveNewProduct(product);
+    	return new ModelAndView("redirect:/adminmode");
+    }
+    
+    @RequestMapping("/adminmode/createProduct")
+    public ModelAndView createProduct(ModelAndView modelAndView) {
+    	Product product = productService.createProduct();
+        return new ModelAndView("new-product", "command", product);
+    }
+    
+    @RequestMapping(value = "/adminmode/saveProduct", method = RequestMethod.POST)
+    public ModelAndView saveProduct(@ModelAttribute("SpringWeb") Product product, ModelMap model) {
+    	productService.saveNewProduct(product);
+    	return new ModelAndView("redirect:/adminmode");
+    }
+    
+
 
 }
