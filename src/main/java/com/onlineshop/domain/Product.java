@@ -39,6 +39,9 @@ public class Product {
     @Column(name = "EndPrice")
     private BigDecimal endPrice;
     
+    @Column(name = "IsInEditor")
+    private boolean isInEditor;
+    
     public Product() {
     	
     }

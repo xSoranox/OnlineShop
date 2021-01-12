@@ -22,7 +22,7 @@
 				<th>Initial price</th>
 				<th>Discount</th>
 				<th>End price</th>
-				<th>Add product</th>
+				<th>Remove product</th>
 			</tr>
 			<c:forEach var="product" items="${cartproducts}" varStatus="index">
 				<tr>
