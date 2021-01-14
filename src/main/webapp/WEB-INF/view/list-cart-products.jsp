@@ -20,6 +20,7 @@
 				<th>No.</th>
 				<th>Name</th>
 				<th>Initial price</th>
+				<th>Quantity</th>
 				<th>Discount</th>
 				<th>End price</th>
 				<th>Remove product</th>
@@ -29,9 +30,13 @@
 					<td align="center">${index.count}</td>
 					<td width="400">${product.name}</td>
 					<td align="center">€${product.priceBeforeDiscount}</td>
+					<td align="center">${product.quantity} 
+						<a href="<c:url value="/shoppingCart/increaseProduct/1/${product.id}"/>">+</a>
+						<a href="<c:url value="/shoppingCart/reduceProduct/1/${product.id}"/>">-</a> 
+					</td>
 					<td align="center">${product.discount}%</td>
 					<td align="center">€${product.endPrice}</td>
-					<td align="center"><a href="<c:url value="/shoppingCart/delete/1/${product.id}"/>">-</a></td>
+					<td align="center"><a href="<c:url value="/shoppingCart/delete/1/${product.id}"/>">Remove</a></td>
 				</tr>
 			</c:forEach>
 		</table>

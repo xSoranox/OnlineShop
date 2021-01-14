@@ -3,6 +3,8 @@ package com.onlineshop.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,36 +37,55 @@ public class ShoppingCartService {
 		Optional<ShoppingCart> cart = shoppingCartRepository.findById(id);
 		cart.ifPresent(c -> cartProductRepository.deleteAllCartProductsByCartId(c));
 	}
-	
-	public void deleteCartProduct(Long cartId, Long productId) {
+
+	public void reduceCartProduct(Long cartId, Long productId, boolean shouldDelete) {
 		Optional<CartProduct> cartProduct = cartProductRepository.findById(productId);
-		cartProduct.ifPresent(c -> validateCartAndRemoveProduct(c, cartId));
+		cartProduct.ifPresent(c -> validateCartAndRemoveProduct(c, cartId, shouldDelete));
 	}
 	
+	public void increaseProductQuantity(Long cartId, Long productId) {
+		Optional<CartProduct> cartProduct = cartProductRepository.findById(productId);
+		cartProduct.ifPresent(cp -> cartProductService.updateQuantityWhenAddingExistingCartProduct(cp));
+	}
+
 	public void addProductToCart(Long cartId, Long productId) {
 		Optional<Product> product = productService.findProductById(productId);
 		product.ifPresent(p -> validateCartAndAddProduct(p, cartId));
 	}
-	
+
 	private void validateCartAndAddProduct(Product product, Long cartId) {
 		Optional<ShoppingCart> cart = shoppingCartRepository.findById(cartId);
-		cart.ifPresent(c -> createCartProductAndAddItToCart(c, product));
+		cart.ifPresent(c -> validateExistingCartProducts(c, product));
 	}
-	
-	private void createCartProductAndAddItToCart(ShoppingCart cart, Product product) {
+
+	private void validateExistingCartProducts(ShoppingCart cart, Product product) {
+		Optional<CartProduct> cartProduct = cartProductRepository.returnsCartProductIfExists(product.getId());
+		if (cartProduct.isPresent()) {
+			cartProduct.ifPresent(cp -> cartProductService.updateQuantityWhenAddingExistingCartProduct(cp));
+		} else {
+			createNewCartProduct(cart, product);
+		}
+	}
+
+	private void createNewCartProduct(ShoppingCart cart, Product product) {
 		CartProduct cartProduct = cartProductService.createCartProduct(product, cart);
 		cart.getProducts().add(cartProduct);
 		shoppingCartRepository.save(cart);
 	}
-	
-	private void validateCartAndRemoveProduct(CartProduct cartProduct, Long cartId) {
+
+	private void validateCartAndRemoveProduct(CartProduct cartProduct, Long cartId, boolean shouldDelete) {
 		Optional<ShoppingCart> cart = shoppingCartRepository.findById(cartId);
-		cart.ifPresent(c -> removeProductFromCart(c, cartProduct));
+		cart.ifPresent(c -> removeProductFromCart(c, cartProduct, shouldDelete));
 	}
-	
-	private void removeProductFromCart(ShoppingCart shoppingCart, CartProduct cartProduct) {
-		shoppingCart.getProducts().remove(cartProduct);
-		shoppingCartRepository.save(shoppingCart);
-		cartProductRepository.deleteProductFromCart(cartProduct);
+
+	@Transactional 
+	private void removeProductFromCart(ShoppingCart shoppingCart, CartProduct cartProduct, 
+			boolean shouldDelete) {
+		int productQuantity = cartProduct.getQuantity();
+		if (shouldDelete || productQuantity <= 1) {
+			cartProductRepository.deleteProductFromCart(cartProduct);
+		} else {
+			cartProductService.updateQuantityWhenDeleteCartProduct(cartProduct, productQuantity);
+		}
 	}
 }

@@ -33,7 +33,7 @@ public class ProductExampleCreator {
     private void createProduct(String name, String category, BigDecimal priceBeforeDiscount, BigDecimal discount) {
         Product product = new ProductBuilder(name, category, priceBeforeDiscount)
                 .setDiscount(discount).build();
-        product.setEndPrice(endPriceCalculator.calculateEndPrice(product));
+        product.setEndPrice(endPriceCalculator.calculateOriginalProductEndPrice(product));
         repository.save(product);
     }
 }

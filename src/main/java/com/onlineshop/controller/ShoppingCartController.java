@@ -43,7 +43,21 @@ public class ShoppingCartController {
 	@RequestMapping("/shoppingCart/delete/{cartId}/{productId}")
 	public String deleteProductFromShoppingCart(@PathVariable("cartId") Long cartId, 
 			@PathVariable("productId") Long productId) {
-		shoppingCartService.deleteCartProduct(cartId, productId);
+		shoppingCartService.reduceCartProduct(cartId, productId, true);
+		return "redirect:/shoppingCart/" + cartId;
+	}
+	
+	@RequestMapping("/shoppingCart/reduceProduct/{cartId}/{productId}")
+	public String reduceCartProductQuantity(@PathVariable("cartId") Long cartId, 
+			@PathVariable("productId") Long productId) {
+		shoppingCartService.reduceCartProduct(cartId, productId, false);
+		return "redirect:/shoppingCart/" + cartId;
+	}
+	
+	@RequestMapping("/shoppingCart/increaseProduct/{cartId}/{productId}")
+	public String increaseCartProductQuantity(@PathVariable("cartId") Long cartId, 
+			@PathVariable("productId") Long productId) {
+		shoppingCartService.increaseProductQuantity(cartId, productId);
 		return "redirect:/shoppingCart/" + cartId;
 	}
 }

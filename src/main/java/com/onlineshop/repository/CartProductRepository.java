@@ -1,6 +1,7 @@
 package com.onlineshop.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -65,5 +66,8 @@ public interface CartProductRepository extends JpaRepository<CartProduct, Long> 
 			+ "INNER JOIN ShoppingCart sc ON sc.id = cp.shoppingCart "
 			+ "ORDER BY cp.discount ASC")
 	List<CartProduct> getProductsByAscendingDiscount();
+	
+    @Query("SELECT cp FROM CartProduct cp WHERE cp.originalProductId = :originalProductId")
+    Optional<CartProduct> returnsCartProductIfExists(@Param("originalProductId") Long originalProductId);
 
 }

@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Products")
-public class Product {
+public class Product implements ProductInterface{
 
     @Id
     @Column(name = "ID")

@@ -48,7 +48,7 @@ public class EditorService {
 	}
 	
 	private void updateEndPrice(Product product) {
-		BigDecimal endPrice = endPriceCalculator.calculateEndPrice(product);
+		BigDecimal endPrice = endPriceCalculator.calculateOriginalProductEndPrice(product);
 		product.setEndPrice(endPrice);
 		productRepository.save(product);
 	}

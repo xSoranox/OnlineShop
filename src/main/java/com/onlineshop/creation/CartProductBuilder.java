@@ -13,12 +13,17 @@ public class CartProductBuilder {
     private BigDecimal discount;
     private BigDecimal endPrice;
     private ShoppingCart shoppingCart;
+    private Long originalProductId;
+    private int quantity;
 
-    public CartProductBuilder(String name, String category, BigDecimal priceBeforeDiscount, ShoppingCart shoppingCart) {
+    public CartProductBuilder(String name, String category, BigDecimal priceBeforeDiscount, 
+    		ShoppingCart shoppingCart, Long originalProductId) {
         this.name = name;
         this.category = category;
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.shoppingCart = shoppingCart;
+        this.originalProductId = originalProductId;
+        this.quantity = 1;
     }
 
     public CartProductBuilder setDiscount(BigDecimal discount) {
@@ -55,6 +60,14 @@ public class CartProductBuilder {
         return shoppingCart;
     }
 
+    public Long getOriginalProductId() {
+        return originalProductId;
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+    
     public CartProduct build() {
         return new CartProduct(this);
     }

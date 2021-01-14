@@ -75,7 +75,7 @@ public class ProductService {
 	public void saveNewProduct(Product product) {
 		String category = productTypeService.getCategoryByType(product.getCategory());
 		product.setCategory(category);
-		BigDecimal endPrice = endPriceCalculator.calculateEndPrice(product);
+		BigDecimal endPrice = endPriceCalculator.calculateOriginalProductEndPrice(product);
 		product.setEndPrice(endPrice);
 		repository.save(product);
 	}
