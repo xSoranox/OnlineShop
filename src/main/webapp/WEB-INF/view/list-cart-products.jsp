@@ -11,8 +11,10 @@
 	<div align="center">
 		<h2>Shopping cart</h2>
 		<div>
-			<th align="center"><button type="button"><a href="<c:url value="/products" />">Home</a></button></th>
-			<th align="center"><a href="<c:url value="/shoppingCart/flush/1"/>">Delete all products from shopping cart</a></th>
+			<th align="center"><button type="button"><a href="<c:url value="/products" />">Home</a></button></th> &nbsp;&nbsp;&nbsp;
+			<th align="center"><a href="<c:url value="/shoppingCart/flush/1"/>">Remove all</a></th>&nbsp;&nbsp;&nbsp;
+			<th align="center">Total sum: </th>
+			<th align="center">€${totalSum}</th>
 		</div><br>
 
 		<table border="1" cellpadding="10">

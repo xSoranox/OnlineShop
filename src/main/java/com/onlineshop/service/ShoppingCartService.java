@@ -1,5 +1,6 @@
 package com.onlineshop.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onlineshop.calculations.EndPriceCalculator;
 import com.onlineshop.domain.CartProduct;
 import com.onlineshop.domain.Product;
 import com.onlineshop.domain.ShoppingCart;
@@ -28,9 +30,21 @@ public class ShoppingCartService {
 	CartProductService cartProductService;
 	@Autowired
 	ProductService productService;
+	@Autowired
+	EndPriceCalculator endPriceCalculator;
 
 	public List<CartProduct> findAllCartProducts(Long id) {
 		return cartProductRepository.findProductsByCartId(id);
+	}
+	
+	public BigDecimal calculateTotalSum(List<CartProduct> cartProducts) {
+		return endPriceCalculator.calculateTotalSum(cartProducts);
+	}
+	
+	public int getCartSize(Long id) {
+		return findAllCartProducts(id).stream()
+			.map(cp -> cp.getQuantity())
+			.reduce(0, (a, b) -> a + b);
 	}
 
 	public void deleteAllCartProducts(Long id) {

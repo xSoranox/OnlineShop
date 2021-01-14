@@ -1,5 +1,6 @@
 package com.onlineshop.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ public class ShoppingCartController {
 	@RequestMapping("/shoppingCart/{cartId}")
 	public ModelAndView getAllProducts(@PathVariable("cartId") Long cartId) {
 		List<CartProduct> cartProducts = shoppingCartService.findAllCartProducts(cartId);
+		BigDecimal totalSum = shoppingCartService.calculateTotalSum(cartProducts);
 		ModelAndView modelAndView = new ModelAndView("list-cart-products");
 		modelAndView.addObject("cartproducts", cartProducts);
+		modelAndView.addObject("totalSum", totalSum);
 		return modelAndView;
 	}
 	

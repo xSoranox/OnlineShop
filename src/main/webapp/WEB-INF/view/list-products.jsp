@@ -13,7 +13,7 @@
 				<tr>
 		<th><h2>Product storage</h2> </th>
 		<th><a href="/onlineshop/shoppingCart/1" data-gtm-click-name="Your cart">
-		<div> 0 </div>
+		<div>${cartSize}</div>
         	<div>
         		<svg width="25" height="25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
         			<g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">	

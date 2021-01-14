@@ -2,6 +2,7 @@ package com.onlineshop.calculations;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import com.onlineshop.domain.CartProduct;
 import com.onlineshop.domain.Product;
@@ -19,6 +20,13 @@ public class EndPriceCalculator {
 	public BigDecimal calculateCartProductEndPrice(CartProduct cartProduct) {
 		BigDecimal priceAfterDiscount = calculatePriceAfterDiscount(cartProduct);
 		return priceAfterDiscount.multiply(BigDecimal.valueOf(cartProduct.getQuantity()));
+	}
+	
+	public BigDecimal calculateTotalSum(List<CartProduct> cartProducts) {
+		BigDecimal totalSum = cartProducts.stream()
+			.map(cp -> cp.getEndPrice())
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return totalSum;
 	}
 
 	private BigDecimal calculatePriceAfterDiscount(ProductInterface product) {

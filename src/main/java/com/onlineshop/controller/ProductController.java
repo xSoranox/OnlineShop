@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.onlineshop.domain.Product;
 import com.onlineshop.service.ProductService;
+import com.onlineshop.service.ShoppingCartService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,12 +21,16 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @RequestMapping("/products")
     public ModelAndView getAllProducts() {
         List<Product> products = productService.findAllProducts();
+        int cartSize = shoppingCartService.getCartSize(1L);
         ModelAndView modelAndView = new ModelAndView("list-products");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("cartSize", cartSize);
         return modelAndView;
     }
 
