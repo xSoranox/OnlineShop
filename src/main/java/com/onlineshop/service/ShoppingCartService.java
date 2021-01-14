@@ -19,6 +19,7 @@ import com.onlineshop.repository.ShoppingCartRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ShoppingCartService {
 

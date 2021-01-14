@@ -10,7 +10,7 @@
 <body>
     <div style="text-align: center">
         <h1>Login as admin</h1>
-        <form align="center" action="login" method="post">
+        <form align="center" action="/onlineshop/login" method="post">
             <label for="username">Username:</label>
             <input name="username" size="30" />
             <br><br>

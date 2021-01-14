@@ -52,6 +52,8 @@ public class JpaConfig {
         factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.put("enable_lazy_load_no_trans", "true");
+        properties.put("current_session_context_class", "thread");
         factory.setJpaProperties(properties);
         return factory.getObject();
     }

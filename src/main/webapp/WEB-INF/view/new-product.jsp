@@ -12,7 +12,7 @@
 <div align="center">
     <h1>Add product</h1>
     <form:form method = "POST" action = "saveProduct">
-        <table>
+        <div><table>
             <form:hidden path="id"/>
             <tr>
               <td><form:label path = "name">Name:</form:label></td>
@@ -39,10 +39,12 @@
             	<td><form:label path = "discount">Discount:</form:label></td>
                 <td><form:input path="discount"/></td>
             </tr>
-            <tr>
-                <td align="center"><input type="submit" value="Save product"></td>
-            </tr>
         </table>
+        </div><br><br>
+
+        <input type="submit" value="Save product"></td>&nbsp;&nbsp;&nbsp;
+        <button type="button"><a href="<c:url value="/adminmode"/>">Admin Home</a></button></td>
+
     </form:form>
 </div>
 
