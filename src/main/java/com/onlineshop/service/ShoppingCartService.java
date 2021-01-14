@@ -24,15 +24,15 @@ import lombok.RequiredArgsConstructor;
 public class ShoppingCartService {
 
 	@Autowired
-	ShoppingCartRepository shoppingCartRepository;
+	private ShoppingCartRepository shoppingCartRepository;
 	@Autowired
-	CartProductRepository cartProductRepository;
+	private CartProductRepository cartProductRepository;
 	@Autowired
-	CartProductService cartProductService;
+	private CartProductService cartProductService;
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	@Autowired
-	EndPriceCalculator endPriceCalculator;
+	private EndPriceCalculator endPriceCalculator;
 
 	public List<CartProduct> findAllCartProducts(Long id) {
 		return cartProductRepository.findProductsByCartId(id);
@@ -50,7 +50,7 @@ public class ShoppingCartService {
 
 	public void deleteAllCartProducts(Long id) {
 		Optional<ShoppingCart> cart = shoppingCartRepository.findById(id);
-		cart.ifPresent(c -> cartProductRepository.deleteAllCartProductsByCartId(c));
+		cart.ifPresent(c -> cartProductRepository.deleteAllCartProductsByCart(c));
 	}
 
 	public void reduceCartProduct(Long cartId, Long productId, boolean shouldDelete) {

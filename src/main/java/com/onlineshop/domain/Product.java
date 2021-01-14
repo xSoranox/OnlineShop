@@ -1,7 +1,6 @@
 package com.onlineshop.domain;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +11,14 @@ import javax.persistence.Table;
 
 import com.onlineshop.creation.ProductBuilder;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "Products")
-public class Product implements ProductInterface{
+public class Product implements ProductInterface {
 
     @Id
     @Column(name = "ID")
@@ -28,7 +29,7 @@ public class Product implements ProductInterface{
     private String name;
 
     @Column(name = "Category")
-    private String category; 
+    private String category;
 
     @Column(name = "PriceBeforeDiscount")
     private BigDecimal priceBeforeDiscount;
@@ -38,12 +39,12 @@ public class Product implements ProductInterface{
 
     @Column(name = "EndPrice")
     private BigDecimal endPrice;
-    
+
     @Column(name = "IsInEditor")
     private boolean isInEditor;
-    
+
     public Product() {
-    	
+
     }
 
     public Product(ProductBuilder builder) {
@@ -52,23 +53,4 @@ public class Product implements ProductInterface{
         this.priceBeforeDiscount = builder.getPriceBeforeDiscount();
         this.discount = builder.getDiscount();
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(name, product.name) &&
-                category == product.category &&
-                Objects.equals(priceBeforeDiscount, product.priceBeforeDiscount) &&
-                Objects.equals(discount, product.discount) &&
-                Objects.equals(endPrice, product.endPrice);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, priceBeforeDiscount, category, discount, endPrice);
-    } 
 }

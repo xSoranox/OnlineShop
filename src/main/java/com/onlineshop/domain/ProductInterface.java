@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 public interface ProductInterface {
 	
-    public Long id = null;
-    public String name = null;
-    public String category = null;
-    public BigDecimal priceBeforeDiscount = null;
-    public BigDecimal discount = null;
-    public BigDecimal endPrice = null;
+    Long id = null;
+    String name = null;
+    String category = null;
+    BigDecimal priceBeforeDiscount = null;
+    BigDecimal discount = null;
+    BigDecimal endPrice = null;
     
     BigDecimal getDiscount();
     BigDecimal getPriceBeforeDiscount();

@@ -10,6 +10,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MyOnlineShop" />
+        <module name="OnlineShop1" />
         <module name="onlineshop" />
       </profile>
     </annotationProcessing>

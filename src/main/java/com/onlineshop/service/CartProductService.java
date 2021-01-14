@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class CartProductService {
 	
 	@Autowired
-	CartProductRepository cartProductRepository;
+	private CartProductRepository cartProductRepository;
 	@Autowired
-	EndPriceCalculator endPriceCalculator;
+	private EndPriceCalculator endPriceCalculator;
 	
 	public CartProduct createCartProduct(Product product, ShoppingCart cart) {
 		CartProduct cartProduct = new CartProductBuilder(product.getName(), product.getCategory(), 

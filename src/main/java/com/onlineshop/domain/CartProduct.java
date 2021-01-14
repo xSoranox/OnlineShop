@@ -1,7 +1,6 @@
 package com.onlineshop.domain;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,9 +14,11 @@ import javax.persistence.Table;
 
 import com.onlineshop.creation.CartProductBuilder;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "CartProducts")
 public class CartProduct implements ProductInterface {
@@ -66,64 +67,4 @@ public class CartProduct implements ProductInterface {
         this.originalProductId = builder.getOriginalProductId();
         this.quantity = builder.getQuantity();
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, priceBeforeDiscount, category, discount, endPrice);
-    } 
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CartProduct other = (CartProduct) obj;
-		if (category == null) {
-			if (other.category != null)
-				return false;
-		} else if (!category.equals(other.category))
-			return false;
-		if (discount == null) {
-			if (other.discount != null)
-				return false;
-		} else if (!discount.equals(other.discount))
-			return false;
-		if (endPrice == null) {
-			if (other.endPrice != null)
-				return false;
-		} else if (!endPrice.equals(other.endPrice))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (originalProductId == null) {
-			if (other.originalProductId != null)
-				return false;
-		} else if (!originalProductId.equals(other.originalProductId))
-			return false;
-		if (priceBeforeDiscount == null) {
-			if (other.priceBeforeDiscount != null)
-				return false;
-		} else if (!priceBeforeDiscount.equals(other.priceBeforeDiscount))
-			return false;
-		if (quantity != other.quantity)
-			return false;
-		if (shoppingCart == null) {
-			if (other.shoppingCart != null)
-				return false;
-		} else if (!shoppingCart.equals(other.shoppingCart))
-			return false;
-		return true;
-	}
 }
