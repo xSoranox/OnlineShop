@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-public class ProductControllerConfig {
+public class ApiConfig {
 
     @Bean
     public ProductService productService() {

@@ -23,7 +23,7 @@ public class AdminModeController {
     private ProductService productService;
 	
     @RequestMapping("/adminmode")
-    public ModelAndView failedConnection() {
+    public ModelAndView getAdminHome() {
     	List<Product> products = productService.findAllProducts();
         ModelAndView modelAndView = new ModelAndView("admin-mode");
         modelAndView.addObject("products", products);
@@ -68,8 +68,8 @@ public class AdminModeController {
         return modelAndView;
     }
     
-    @RequestMapping("/adminmode/editProduct/saveEditedProduct")
-    public ModelAndView saveEditedBook(@ModelAttribute Product product) {
+    @RequestMapping(value = "/adminmode/editProduct/saveEditedProduct", method = RequestMethod.POST)
+    public ModelAndView saveEditedProduct(@ModelAttribute Product product) {
     	productService.saveNewProduct(product);
     	return new ModelAndView("redirect:/adminmode");
     }

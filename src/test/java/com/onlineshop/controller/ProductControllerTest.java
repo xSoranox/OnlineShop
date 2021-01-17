@@ -14,13 +14,15 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Objects;
+
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfig.class, ProductControllerConfig.class, WebMvcConfig.class})
+@ContextConfiguration(classes = {JpaConfig.class, ApiConfig.class, WebMvcConfig.class})
 @WebAppConfiguration
 public class ProductControllerTest {
 
@@ -39,7 +41,7 @@ public class ProductControllerTest {
         MvcResult result = this.mockMvc.perform(get("/products/")).andDo(print())
                 .andExpect(status().isOk()).andReturn();
 
-        assertEquals("list-products", result.getModelAndView().getViewName());
+        assertEquals("list-products", Objects.requireNonNull(result.getModelAndView()).getViewName());
     }
 
     @Test
@@ -47,7 +49,7 @@ public class ProductControllerTest {
         MvcResult result = this.mockMvc.perform(get("/products/example/")).andDo(print())
                 .andExpect(status().is(302)).andReturn();
 
-        assertEquals("redirect:/products", result.getModelAndView().getViewName());
+        assertEquals("redirect:/products", Objects.requireNonNull(result.getModelAndView()).getViewName());
     }
 
     @Test
@@ -57,7 +59,7 @@ public class ProductControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn();
 
-        assertEquals("list-products", result.getModelAndView().getViewName());
+        assertEquals("list-products", Objects.requireNonNull(result.getModelAndView()).getViewName());
     }
 
     @Test
@@ -67,7 +69,7 @@ public class ProductControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn();
 
-        assertEquals("list-products", result.getModelAndView().getViewName());
+        assertEquals("list-products", Objects.requireNonNull(result.getModelAndView()).getViewName());
     }
 
     @Test
@@ -75,6 +77,6 @@ public class ProductControllerTest {
         MvcResult result = this.mockMvc.perform(get("/products/flush/")).andDo(print())
                 .andExpect(status().is(302)).andReturn();
 
-        assertEquals("redirect:/", result.getModelAndView().getViewName());
+        assertEquals("redirect:/", Objects.requireNonNull(result.getModelAndView()).getViewName());
     }
 }
