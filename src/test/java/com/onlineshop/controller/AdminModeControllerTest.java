@@ -4,7 +4,6 @@ import com.onlineshop.config.JpaConfig;
 import com.onlineshop.config.WebMvcConfig;
 import com.onlineshop.creation.ProductBuilder;
 import com.onlineshop.domain.Product;
-import com.onlineshop.enumeration.Category;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
