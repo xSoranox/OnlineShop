@@ -2,9 +2,6 @@ package com.onlineshop.controller;
 
 import com.onlineshop.config.JpaConfig;
 import com.onlineshop.config.WebMvcConfig;
-import com.onlineshop.repository.ProductRepository;
-import com.onlineshop.service.ProductService;
-import com.onlineshop.service.ShoppingCartService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,16 +10,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfig.class, ProductControllerConfig.class, 
-		WebMvcConfig.class, ProductRepository.class})
+@ContextConfiguration(classes = {JpaConfig.class, ProductControllerConfig.class, WebMvcConfig.class})
 @WebAppConfiguration
 public class ProductControllerTest {
 
@@ -30,12 +28,6 @@ public class ProductControllerTest {
 
     @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private ProductRepository productRepository;
 
     @Before
     public void setup() throws Exception {
@@ -43,27 +35,46 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldReturnDefaultMessage() throws Exception {
-        this.mockMvc.perform(get("/products/")).andDo(print()).andExpect(status().isOk());
+    public void testGetAllProducts() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/products/")).andDo(print())
+                .andExpect(status().isOk()).andReturn();
+
+        assertEquals("list-products", result.getModelAndView().getViewName());
     }
 
     @Test
-    public void getAllProducts() {
+    public void testGetExampleOfProducts() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/products/example/")).andDo(print())
+                .andExpect(status().is(302)).andReturn();
+
+        assertEquals("redirect:/products", result.getModelAndView().getViewName());
     }
 
     @Test
-    public void getExampleOfProducts() {
+    public void testFindProductsByName() throws Exception {
+        MvcResult result = this.mockMvc
+                .perform(get("/products/search").param("productName", "Milka"))
+                .andDo(print())
+                .andExpect(status().isOk()).andReturn();
+
+        assertEquals("list-products", result.getModelAndView().getViewName());
     }
 
     @Test
-    public void findProductsByName() {
+    public void testGetProductsByType() throws Exception {
+        MvcResult result = this.mockMvc
+                .perform(get("/products/findbytype/{productType}/", "breadAndPastries"))
+                .andDo(print())
+                .andExpect(status().isOk()).andReturn();
+
+        assertEquals("list-products", result.getModelAndView().getViewName());
     }
 
     @Test
-    public void getProductsByType() {
-    }
+    public void testFlush() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/products/flush/")).andDo(print())
+                .andExpect(status().is(302)).andReturn();
 
-    @Test
-    public void flush() {
+        assertEquals("redirect:/", result.getModelAndView().getViewName());
     }
 }

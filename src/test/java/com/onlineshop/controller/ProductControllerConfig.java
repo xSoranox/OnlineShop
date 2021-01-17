@@ -7,15 +7,11 @@ import com.onlineshop.service.ProductService;
 import com.onlineshop.service.ProductTypeService;
 import com.onlineshop.service.ShoppingCartService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = "com.onlineshop.repository")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.onlineshop.repository", entityManagerFactoryRef = "entityManagerFactory")
 public class ProductControllerConfig {
 
     @Bean
