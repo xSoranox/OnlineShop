@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT p FROM Product p WHERE p.name=:name")
+    @Query(value = "SELECT p FROM Product p WHERE p.name LIKE '%' || :name || '%'")
     List<Product> findProductsByName(@Param("name") String name);
 
     @Query(value = "SELECT p FROM Product p WHERE p.category=:category")
