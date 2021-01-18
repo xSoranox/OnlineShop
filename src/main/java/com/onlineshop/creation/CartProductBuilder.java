@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import com.onlineshop.domain.CartProduct;
 import com.onlineshop.domain.ShoppingCart;
 
+/**
+ * Creational GOF pattern: Builder
+ */
 public class CartProductBuilder {
 	
     private String name;

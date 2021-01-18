@@ -11,6 +11,9 @@
 
 <div align="center">
     <h2>Edit product</h2>
+    	<div align="center">
+
+		</div>
 
     <form:form action="saveEditedProduct" modelAttribute="product">
 
@@ -46,6 +49,13 @@
                 <td><form:input path="discount"/></td>
             </tr>
             <tr>
+                <td>${message}</td>  
+            </tr>
+            <tr>
+  				<td>
+  					<button type="submit"><a href="<c:url value="/logout" />">Logout</a></button>
+  					<button type="button"><a href="<c:url value="/adminmode" />">Admin Home</a></button>
+  				</td>
                 <td><input type="submit" value="Update product"></td>
             </tr>
         </table>

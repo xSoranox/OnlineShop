@@ -12,6 +12,9 @@ import com.onlineshop.enumeration.Category;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Structural GOF pattern: Flyweight
+ */
 @RequiredArgsConstructor
 @Component
 public class ProductExampleCreator {

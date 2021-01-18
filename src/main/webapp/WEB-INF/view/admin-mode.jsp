@@ -15,7 +15,7 @@
 			<th align="center">
 				<div>
 					<form align="center" action="/onlineshop/adminmode/searchByName">
-						<button type="submit"><a href="<c:url value="logout" />">Logout</a></button> &nbsp;
+						<button type="submit"><a href="<c:url value="/logout" />">Logout</a></button> &nbsp;
 						<button type="button"><a href="<c:url value="/adminmode" />">Admin Home</a></button> &nbsp; 
 						<input type="text" name="productName" size="45" />
 						<input type="submit" value="Search by name" />

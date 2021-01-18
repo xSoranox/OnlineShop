@@ -3,7 +3,10 @@ package com.onlineshop.service;
 import com.onlineshop.calculations.EndPriceCalculator;
 import com.onlineshop.creation.ProductExampleCreator;
 import com.onlineshop.domain.Product;
+import com.onlineshop.domain.ResultContainer;
 import com.onlineshop.repository.ProductRepository;
+import com.onlineshop.service.validations.ProductValidator;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +34,8 @@ public class ProductServiceTest {
     private ProductTypeService productTypeService;
     @Mock
     private EndPriceCalculator endPriceCalculator;
+    @Mock
+    private ProductValidator productValidator;
     @InjectMocks
     private ProductService productService;
 
@@ -99,13 +104,25 @@ public class ProductServiceTest {
     public void testFindProductsByType() {
         when(productTypeService.getCategoryByType("type")).thenReturn("category");
         when(repository.getProductsByCategory("category")).thenReturn(getListOfProducts());
-        List<Product> result = productService.findProductsByType("type");
+        ResultContainer result = productService.findProductsByType("type");
 
-        assertFalse(result.isEmpty());
-        assertEquals(result.get(0).getName(), "TestProduct");
-        assertEquals(result.size(), 1);
+        assertFalse(result.getProducts().isEmpty());
+        assertEquals(result.getProducts().get(0).getName(), "TestProduct");
+        assertEquals(result.getProducts().size(), 1);
+        assertEquals(result.getMessage(), "");
         verify(productTypeService).getCategoryByType("type");
         verify(repository).getProductsByCategory("category");
+        verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
+    }
+    
+    @Test
+    public void testFindProductsByTypeMessage() {
+        when(productTypeService.getCategoryByType("type")).thenReturn("");
+        ResultContainer result = productService.findProductsByType("type");
+
+        assertTrue(result.getProducts().isEmpty());
+        assertEquals(result.getMessage(), "Please select category");
+        verify(productTypeService).getCategoryByType("type");
         verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
     }
 
@@ -133,19 +150,73 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testSaveNewProduct() {
+    public void testSaveNewProductStandardFlow() {
         Product product = new Product();
         product.setName("TestProduct");
         product.setCategory("Category");
         when(productTypeService.getCategoryByType("Category")).thenReturn("NewCategory");
         when(endPriceCalculator.calculateOriginalProductEndPrice(product)).thenReturn(BigDecimal.valueOf(10));
-        productService.saveNewProduct(product);
+        when(productValidator.validateAndGetMessage(product, false)).thenReturn("");
+        String result = productService.saveNewProduct(product, false);
 
         assertEquals(product.getEndPrice(), BigDecimal.valueOf(10));
         assertEquals(product.getCategory(), "NewCategory");
+        assertEquals(product.getDiscount(), BigDecimal.ZERO);
+        assertEquals(result, "");
         verify(productTypeService).getCategoryByType("Category");
         verify(endPriceCalculator).calculateOriginalProductEndPrice(product);
         verify(repository).save(product);
+        verify(productValidator).validateAndGetMessage(product, false);
+        verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
+    }
+    
+    @Test
+    public void testSaveNewProductEmptyStringFlow() {
+        Product product = new Product();
+        product.setName("TestProduct");
+        when(productValidator.validateAndGetMessage(product, false)).thenReturn("Select category");
+        String result = productService.saveNewProduct(product, false);
+
+        assertEquals(result, "Select category");
+        verify(productValidator).validateAndGetMessage(product, false);
+        verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
+    }
+    
+    @Test
+    public void testSaveNewProductSecondEmptyStringFlow() {
+        Product product = new Product();
+        product.setName("TestProduct");
+        product.setCategory("Category");
+        when(productTypeService.getCategoryByType("Category")).thenReturn("");
+        when(productValidator.validateAndGetMessage(product, false)).thenReturn("");
+        String result = productService.saveNewProduct(product, false);
+
+        assertEquals(product.getCategory(), "Category");
+        assertEquals(result, "Please select category");
+        verify(productTypeService).getCategoryByType("Category");
+        verify(productValidator).validateAndGetMessage(product, false);
+        verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
+    }
+    
+    @Test
+    public void testSaveNewProductNormalDiscount() {
+        Product product = new Product();
+        product.setName("TestProduct");
+        product.setCategory("Category");
+        product.setDiscount(BigDecimal.TEN);
+        when(productTypeService.getCategoryByType("Category")).thenReturn("NewCategory");
+        when(endPriceCalculator.calculateOriginalProductEndPrice(product)).thenReturn(BigDecimal.valueOf(10));
+        when(productValidator.validateAndGetMessage(product, false)).thenReturn("");
+        String result = productService.saveNewProduct(product, false);
+
+        assertEquals(product.getEndPrice(), BigDecimal.valueOf(10));
+        assertEquals(product.getCategory(), "NewCategory");
+        assertEquals(product.getDiscount(), BigDecimal.TEN);
+        assertEquals(result, "");
+        verify(productTypeService).getCategoryByType("Category");
+        verify(endPriceCalculator).calculateOriginalProductEndPrice(product);
+        verify(repository).save(product);
+        verify(productValidator).validateAndGetMessage(product, false);
         verifyNoMoreInteractions(repository, productCreator, productTypeService, endPriceCalculator);
     }
 

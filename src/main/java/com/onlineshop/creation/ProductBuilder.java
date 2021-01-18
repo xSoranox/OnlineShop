@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 import com.onlineshop.domain.Product;
 
+/**
+ * Creational GOF pattern: Builder
+ */
 public class ProductBuilder {
 
     private String name;

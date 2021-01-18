@@ -39,8 +39,12 @@
             	<td><form:label path = "discount">Discount:</form:label></td>
                 <td><form:input path="discount"/></td>
             </tr>
+            <tr>
+            	<td></td>
+            	<td>${message}</td>
+            </tr>
         </table>
-        </div><br><br>
+        </div><br>
 
         <input type="submit" value="Save product"></td>&nbsp;&nbsp;&nbsp;
         <button type="button"><a href="<c:url value="/adminmode"/>">Admin Home</a></button></td>

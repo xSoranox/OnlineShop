@@ -3,15 +3,19 @@ package com.onlineshop.service;
 import com.onlineshop.calculations.EndPriceCalculator;
 import com.onlineshop.creation.ProductExampleCreator;
 import com.onlineshop.repository.ProductRepository;
+import com.onlineshop.service.validations.ProductValidator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onlineshop.domain.Product;
+import com.onlineshop.domain.ResultContainer;
 
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +33,8 @@ public class ProductService {
 	private ProductTypeService productTypeService;
 	@Autowired
 	private EndPriceCalculator endPriceCalculator;
+	@Autowired
+	private ProductValidator productValidator;
 
 	public List<Product> findAllProducts() {
 		return repository.findAll();
@@ -54,9 +60,12 @@ public class ProductService {
 		return products;
 	}
 	
-	public List<Product> findProductsByType(String productType) {
+	public ResultContainer findProductsByType(String productType) {
 		String category = productTypeService.getCategoryByType(productType);
-		return repository.getProductsByCategory(category);
+		if (category.equals("")) {
+			return getResult("Please select category", Collections.emptyList());
+		}
+		return getResult("", repository.getProductsByCategory(category));
 	}
 	
 	public void deleteAllProducts() {
@@ -71,17 +80,39 @@ public class ProductService {
 		repository.save(product);
 	}
 	
+	/**
+	 * Structural GOF pattern: Facade
+	 * Combines the functionality of two classes into one common
+	 */
 	@Transactional
-	public void saveNewProduct(Product product) {
+	public String saveNewProduct(Product product, boolean isCreational) {
+		String message = productValidator.validateAndGetMessage(product, isCreational);
+		if (!message.equals("")) {
+			return message;
+		}
 		String category = productTypeService.getCategoryByType(product.getCategory());
+		if (category.equals("")) {
+			return "Please select category";
+		}
 		product.setCategory(category);
 		BigDecimal endPrice = endPriceCalculator.calculateOriginalProductEndPrice(product);
 		product.setEndPrice(endPrice);
+		if (product.getDiscount() == null) {
+			product.setDiscount(BigDecimal.ZERO);
+		}
 		repository.save(product);
+		return "";
 	}
 	
 	public Product createProduct() {
 		return new Product();
+	}
+	
+	private ResultContainer getResult(String message, List<Product> products) {
+		ResultContainer result = new ResultContainer();
+		result.setProducts(products);
+		result.setMessage(message);
+		return result;
 	}
 
 }

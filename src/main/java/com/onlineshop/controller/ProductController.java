@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.onlineshop.domain.Product;
+import com.onlineshop.domain.ResultContainer;
 import com.onlineshop.service.ProductService;
 import com.onlineshop.service.ShoppingCartService;
 
@@ -50,9 +51,9 @@ public class ProductController {
     
     @RequestMapping("/products/findbytype/{productType}")
     public ModelAndView getProductsByType(@PathVariable("productType") String productType) {
-        List<Product> products = productService.findProductsByType(productType);
+        ResultContainer result = productService.findProductsByType(productType);
         ModelAndView modelAndView = new ModelAndView("list-products");
-        modelAndView.addObject("products", products);
+        modelAndView.addObject("products", result.getProducts());
         return modelAndView;
     }
     

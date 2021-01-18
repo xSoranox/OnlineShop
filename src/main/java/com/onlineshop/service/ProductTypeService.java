@@ -26,7 +26,7 @@ public class ProductTypeService {
 		case "sweetsAndSnacks":
 			return Category.SWEETS_AND_SNACKS.getValue();
 		default:
-			throw new RuntimeException();
+			return "";
 		}
 	}
 }

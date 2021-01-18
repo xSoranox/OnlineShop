@@ -30,7 +30,7 @@
         
 		<form align="center" action="/onlineshop/products/search">
 			<button type="button"><a href="<c:url value="/connectadmin" />">Admin mode</a></button> &nbsp;
-			<button type="button"><a href="<c:url value="/products" />">Home</a></button> &nbsp;
+			<button type="button"><a href="<c:url value="/products" />">All products</a></button> &nbsp;
 			<input type="text" name="productName" size="45" />  
 			<input type="submit" value="Search by name" />
 		</form>

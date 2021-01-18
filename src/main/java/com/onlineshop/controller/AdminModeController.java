@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.onlineshop.domain.Product;
+import com.onlineshop.domain.ResultContainer;
 import com.onlineshop.service.ProductService;
 
 @Controller
@@ -48,9 +49,10 @@ public class AdminModeController {
     
     @RequestMapping("/adminmode/findbytype/{productType}")
     public ModelAndView getProductsByType(@PathVariable("productType") String productType) {
-        List<Product> products = productService.findProductsByType(productType);
+    	ResultContainer result = productService.findProductsByType(productType);
         ModelAndView modelAndView = new ModelAndView("admin-mode");
-        modelAndView.addObject("products", products);
+        modelAndView.addObject("products", result.getProducts());
+        modelAndView.addObject("message", result.getMessage());
         return modelAndView;
     }
     
@@ -70,8 +72,14 @@ public class AdminModeController {
     
     @RequestMapping(value = "/adminmode/editProduct/saveEditedProduct", method = RequestMethod.POST)
     public ModelAndView saveEditedProduct(@ModelAttribute Product product) {
-    	productService.saveNewProduct(product);
-    	return new ModelAndView("redirect:/adminmode");
+    	String message = productService.saveNewProduct(product, false);
+    	if (message.equals("")) {
+    		return new ModelAndView("redirect:/adminmode");
+    	}
+        ModelAndView modelAndView = new ModelAndView("edit-product");
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
     
     @RequestMapping("/adminmode/createProduct")
@@ -82,8 +90,13 @@ public class AdminModeController {
     
     @RequestMapping(value = "/adminmode/saveProduct", method = RequestMethod.POST)
     public ModelAndView saveProduct(@ModelAttribute("SpringWeb") Product product, ModelMap model) {
-    	productService.saveNewProduct(product);
-    	return new ModelAndView("redirect:/adminmode");
+    	String message = productService.saveNewProduct(product, true);
+    	if (message.equals("")) {
+    		return new ModelAndView("redirect:/adminmode");
+    	}
+    	ModelAndView modelAndView = new ModelAndView("new-product", "command", product);
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
     
 

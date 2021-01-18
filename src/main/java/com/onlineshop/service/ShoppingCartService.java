@@ -42,6 +42,9 @@ public class ShoppingCartService {
 		return endPriceCalculator.calculateTotalSum(cartProducts);
 	}
 	
+	/**
+	 * Behavioral GOF pattern: Iterator
+	 */
 	public int getCartSize(Long id) {
 		return findAllCartProducts(id).stream()
 			.map(cp -> cp.getQuantity())
